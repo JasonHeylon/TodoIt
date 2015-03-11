@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todoit</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application'%>
+  <%= csrf_meta_tags %>
+</head>
+<body ng-app="todoit" ng-controller="TodoListController as todoListCtrl">
+	<header>
+		<div class="title">
+		  todo it today
+		</div>
+
+		<div class="user-info">
+		  未登录
+		</div>
+	</header>
+
+	<div id="body">
+		<section class="input-box" />
+			<input type="text"  placeholder="输入要做的事..." >
+		</section>
+		<section class="todo-list">
+			<div class="item">
+				<div class="delete-panel">
+					<a href="#"><i class="fa fa-trash"></i></a>
+				</div>
+				<md-checkbox ng-model="todoListCtrl.check" aria-label="" class="todo-check md-success">
+			  </md-checkbox>
+				<label class="title">
+					test
+				</label>
+			</div>
+			<div class="item">
+				<md-checkbox ng-model="todoListCtrl.check" aria-label="" class="todo-check md-success">
+			  </md-checkbox>
+				<label class="title">
+					test
+				</label>
+			</div>
+		</section>
+
+		<h2>
+			已完成
+		</h2>
+
+		<section class="complete-list">
+			<div class="list-header">
+				
+			</div>
+			<div class="item">
+				<md-checkbox ng-model="todoListCtrl.check" aria-label="" class="todo-check md-success">
+			  </md-checkbox>
+				<label class="title">
+					test
+				</label>
+			</div>
+		</section>
+	</div>
+	
+	<footer>
+		
+	</footer>
+
+</body>
+</html>
+
+

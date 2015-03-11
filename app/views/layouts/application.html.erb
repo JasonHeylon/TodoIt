@@ -8,7 +8,16 @@
 </head>
 <body>
 
-<%= yield %>
+	<header>
+		<%= render 'shared/header' %>
+	</header>
+	<div id="body" class="container">
+		<%= yield %>
+	</div>
+	
+	<footer class="container">
+		
+	</footer>
 
 </body>
 </html>

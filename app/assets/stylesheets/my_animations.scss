@@ -1,0 +1,65 @@
+// deleting-item start
+	@keyframes deleting-item
+	{
+		0%   { width: 45px;}
+		25%  { width: 30%; }
+		50%  { width: 50%; }
+		75%	 { width: 80%; }
+		100% { width: 95%; }
+	}
+
+	@-moz-keyframes deleting-item /* Firefox */
+	{
+		0%   { width: 45px;}
+		25%  { width: 30%; }
+		50%  { width: 50%; }
+		75%	 { width: 80%; }
+		100% { width: 95%; }
+	}
+
+	@-webkit-keyframes deleting-item /* Safari 和 Chrome */
+	{
+		0%   { width: 45px;}
+		25%  { width: 30%; }
+		50%  { width: 50%; }
+		75%	 { width: 80%; }
+		100% { width: 95%; }
+	}
+
+	@-o-keyframes deleting-item /* Opera */
+	{
+		0%   { width: 45px;}
+		25%  { width: 30%; }
+		50%  { width: 50%; }
+		75%	 { width: 80%; }
+		100% { width: 95%; }
+	}
+// deleting-item end
+
+
+
+// deleting-item start
+	@keyframes deleted-item
+	{
+		from {opacity: 1;}
+		to {opacity: 0; display:none; color: #d9d9d9; text-decoration: line-through;}
+	}
+
+	@-moz-keyframes deleted-item /* Firefox */
+	{
+		from {opacity: 1;}
+		to {opacity: 0; display:none; color: #d9d9d9; text-decoration: line-through;}
+	}
+
+	@-webkit-keyframes deleted-item /* Safari 和 Chrome */
+	{
+		from {opacity: 1;}
+		to {opacity: 0; display:none; color: #d9d9d9; text-decoration: line-through;}
+	}
+
+	@-o-keyframes deleted-item /* Opera */
+	{
+		from {opacity: 1;}
+		to {opacity: 0; display:none; color: #d9d9d9; text-decoration: line-through;}
+	}
+// deleting-item end

@@ -10,6 +10,26 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+
+ *= require base
  *= require_tree .
  *= require_self
+ *= require angular-material
+ *= require font-awesome
  */
+
+
+body{
+	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: #4d4d4d;
+	background-color: #f5f5f5;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+input{
+	font-family: inherit;
+	vertical-align: baseline;
+}
