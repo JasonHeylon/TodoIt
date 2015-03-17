@@ -11,9 +11,16 @@
 // about supported directives.
 //
 
+//= require jquery
 //= require angular
 //= require angular-animate
 //= require angular-aria
 //= require angular-material
+//= require angular-route
+//= require angular-resource
+//= require moment-with-locales
+
+//= require angular-rails-templates
+//= require_tree ../templates
 
 //= require_tree .

@@ -63,3 +63,77 @@
 		to {opacity: 0; display:none; color: #d9d9d9; text-decoration: line-through;}
 	}
 // deleting-item end
+
+
+// rotate-todo start
+	@keyframes rotate-todo
+	{
+		from {
+			transform:rotate(0deg);
+			-ms-transform:rotate(0deg); 	/* IE 9 */
+			-moz-transform:rotate(0deg); 	/* Firefox */
+			-webkit-transform:rotate(0deg); /* Safari 和 Chrome */
+			-o-transform:rotate(0deg); 	/* Opera */
+		}
+		to {
+			transform:rotate(-7deg);
+			-ms-transform:rotate(-7deg); 	/* IE 9 */
+			-moz-transform:rotate(-7deg); 	/* Firefox */
+			-webkit-transform:rotate(-7deg); /* Safari 和 Chrome */
+			-o-transform:rotate(-7deg); 	/* Opera */
+		}
+	}
+
+	@-moz-keyframes rotate-todo /* Firefox */
+	{
+		from {
+			transform:rotate(0deg);
+			-ms-transform:rotate(0deg); 	/* IE 9 */
+			-moz-transform:rotate(0deg); 	/* Firefox */
+			-webkit-transform:rotate(0deg); /* Safari 和 Chrome */
+			-o-transform:rotate(0deg); 	/* Opera */
+		}
+		to {
+			transform:rotate(-7deg);
+			-ms-transform:rotate(-7deg); 	/* IE 9 */
+			-moz-transform:rotate(-7deg); 	/* Firefox */
+			-webkit-transform:rotate(-7deg); /* Safari 和 Chrome */
+			-o-transform:rotate(-7deg); 	/* Opera */
+		}
+	}
+
+	@-webkit-keyframes rotate-todo /* Safari 和 Chrome */
+	{
+		from {
+			transform:rotate(0deg);
+			-ms-transform:rotate(0deg); 	/* IE 9 */
+			-moz-transform:rotate(0deg); 	/* Firefox */
+			-webkit-transform:rotate(0deg); /* Safari 和 Chrome */
+			-o-transform:rotate(0deg); 	/* Opera */
+		}
+		to {
+			transform:rotate(-7deg);
+			-ms-transform:rotate(-7deg); 	/* IE 9 */
+			-moz-transform:rotate(-7deg); 	/* Firefox */
+			-webkit-transform:rotate(-7deg); /* Safari 和 Chrome */
+			-o-transform:rotate(-7deg); 	/* Opera */
+		}	}
+
+	@-o-keyframes rotate-todo /* Opera */
+	{
+		from {
+			transform:rotate(0deg);
+			-ms-transform:rotate(0deg); 	/* IE 9 */
+			-moz-transform:rotate(0deg); 	/* Firefox */
+			-webkit-transform:rotate(0deg); /* Safari 和 Chrome */
+			-o-transform:rotate(0deg); 	/* Opera */
+		}
+		to {
+			transform:rotate(-7deg);
+			-ms-transform:rotate(-7deg); 	/* IE 9 */
+			-moz-transform:rotate(-7deg); 	/* Firefox */
+			-webkit-transform:rotate(-7deg); /* Safari 和 Chrome */
+			-o-transform:rotate(-7deg); 	/* Opera */
+		}
+	}
+// rotate-todo end

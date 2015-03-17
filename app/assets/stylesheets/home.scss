@@ -28,9 +28,10 @@ header{
 	}
 }
 #body{
+	margin: 10px auto;
 	position: relative;
-	width: 780px;
-	margin: auto;
+	width: 100%;
+	max-width: 780px;
 }
 .input-box{
 	position: relative;
@@ -63,7 +64,7 @@ header{
 	margin-bottom: 10px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 	border-radius: 2px;
-	.item{
+	.todo{
 		transition: all 2s;
 		-moz-transition: all 2s;	/* Firefox 4 */
 		-webkit-transition: all 2s;	/* Safari 和 Chrome */
@@ -128,6 +129,22 @@ header{
 
 		}
 
+		.complete-panel{
+			position: absolute;
+			height: 100%;
+			line-height: 100%;
+			width: 100%;
+			background-color: #449d44;
+			color: #fff;
+			left: 0;
+			top :0;
+			width: 0px;
+			transition: width  0.5s ease-in-out;
+			-moz-transition: width 0.5s ease-in-out;	/* Firefox 4 */
+			-webkit-transition: width 0.5s ease-in-out;	/* Safari 和 Chrome */
+			-o-transition: width 0.5s ease-in-out;	/* Opera */
+		}
+
 		&:hover{
 			.delete-panel{
 				width: 40px;
@@ -138,13 +155,13 @@ header{
 				a{
 					opacity: 1;
 				}
-				
+
 			}
 		}
 
 	}
 
-	.item.deleting{
+	.todo.deleting{
 		.delete-panel{
 			animation: deleting-item 5s linear alternate;
 			/* Firefox: */
@@ -157,7 +174,7 @@ header{
 			&:hover{ width: 95%; }
 		}
 	}
-	.item.deleted{
+	.todo.deleted{
 		animation: deleted-item 2s linear;
 		/* Firefox: */
 		-moz-animation: deleted-item 2s linear;
@@ -175,9 +192,55 @@ header{
 
 .complete-list{
 	color: #e1e1e1;
-	.item{
+	.todo{
 		.title{
 			text-decoration: line-through;
 		}
 	}
 }
+
+
+
+.todo.ng-enter,
+.todo.ng-leave {
+	transition: color 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out;
+	-moz-transition: color 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out;	/* Firefox 4 */
+	-webkit-transition: color 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out;	/* Safari 和 Chrome */
+	-o-transition: color 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out;	/* Opera */
+}
+.todo.ng-enter{
+	position: absolute;
+	margin: 50px 0px 0px 0px;
+	opacity: 0;
+}
+.todo-list .todo.ng-enter-active{
+	position: relative;
+	opacity: 1;
+	margin: auto;
+}
+
+.todo-list .todo.ng-leave.ng-leave-active{
+	position: absolute;
+	width:100%;
+	margin: 50px 0px 0px 0px;
+	z-index: 1000;
+	opacity: 0;
+	color: #e1e1e1;
+	transform-origin: right bottom;
+
+	animation: rotate-todo 1s linear;
+	/* Firefox: */
+	-moz-animation: rotate-todo 1s linear;
+	/* Safari 和 Chrome: */
+	-webkit-animation: rotate-todo 1s linear;
+	/* Opera: */
+	-o-animation: rotate-todo 1s linear;
+		
+	.complete-panel{
+		width: 100%;
+	}
+	.title{
+		text-decoration: line-through;
+	}
+}
+

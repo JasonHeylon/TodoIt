@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
-  resources :todo
+  resources :todos do
+    put 'mark_complete', on: :member
+    put 'mark_uncomplete', on: :member
+
+  end
 
   root "home#index"
 

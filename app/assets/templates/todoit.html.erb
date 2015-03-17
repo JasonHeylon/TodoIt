@@ -1,0 +1,63 @@
+
+
+	<header>
+		<div class="title">
+		  {{ app_title }}
+		</div>
+
+		<div class="user-info">
+		  未登录
+		</div>
+	</header>
+
+	<div id="body">
+		<form ng-submit="addTodo(new_todo)" class="input-box">
+			<input type="text" placeholder="输入要做的事..." ng-model="new_todo.title" />
+		</form>
+
+		<section class="todo-list">
+			<div class="no-list" ng-hide="todo_list.length !== 0">
+				暂无信息
+			</div>
+
+			<div class="todo" ng-animate ng-repeat="todo in todo_list | todoFilter: false | orderBy: '-created_at'">
+				<div class="delete-panel" ng-click="removeTodo(todo)">
+					<a ><i class="fa fa-trash"></i></a>
+				</div>
+				<div class="complete-panel"></div>
+				<md-checkbox ng-model="todo.is_completed"
+				aria-label="" ng-change="markComplete(todo)" class="todo-check md-success">
+			  </md-checkbox>
+				<label class="title">
+					{{ todo.title }}
+				</label>
+			</div>
+
+			<todo-list todos="todoListCtrl.todo_list" />
+
+		</section>
+
+		<h2>
+			已完成
+		</h2>
+
+		<section class="complete-list">
+			<div class="no-list" ng-hide="todo_list.length !== 0">
+				暂无信息
+			</div>
+
+			<div class="todo" ng-animate ng-repeat="item in todo_list | todoFilter: true | orderBy: '-completed_at'">
+				<div class="delete-panel" ng-click="removeTodo(item)">
+					<a ><i class="fa fa-trash"></i></a>
+				</div>
+
+				<div class="complete-panel"></div>
+
+				<md-checkbox ng-model="item.is_completed" ng-change="markUnComplete(item)" aria-label="" class="todo-check md-success">
+			  </md-checkbox>
+				<label class="title">
+					{{ item.title }}
+				</label>
+			</div>
+		</section>
+	</div>

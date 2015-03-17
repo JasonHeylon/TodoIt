@@ -8,8 +8,10 @@ gem 'sqlite3'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-# gem 'jquery-rails'
+gem 'jquery-rails'
 gem 'font-awesome-rails', '~> 4.2.0.0'
+
+gem 'angular-rails-templates'
 
 gem 'devise'
 gem 'settingslogic', '~> 2.0.9'
