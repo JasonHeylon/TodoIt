@@ -1,0 +1,12 @@
+<div class="todo" ng-animate >
+	<div class="delete-panel" ng-click="removeTodo(todo)">
+		<a ><i class="fa fa-trash"></i></a>
+	</div>
+	<div class="complete-panel"></div>
+	<md-checkbox ng-model="todo.is_completed"
+	aria-label="" ng-change="markComplete(todo)" class="todo-check md-success">
+  </md-checkbox>
+	<label class="title">
+		{{ todo.title }}
+	</label>
+</div>

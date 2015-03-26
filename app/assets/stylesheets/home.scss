@@ -3,14 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 body{
-
+	position: relative;
 }
 
 header{
 	height: 100px;
 	line-height: 100px;
 	.title{
-		width: 420px;
+		width: 100%;
 		margin: auto;
 		font-size: 6em;
 		font-weight: 100;
@@ -244,3 +244,55 @@ header{
 	}
 }
 
+
+.date-navigation{
+	.left, .right{
+		position: fixed;
+		top: 40%;
+		font-size: 5em;
+		text-decoration: none;
+		opacity: 0.3;
+		display: block;
+		height: 100%;
+		transition: opacity 0.5s;
+	}
+	.left:hover, .right:hover{
+		opacity: 0.9;
+	}
+	.left{
+		left: 15px;
+		text-align: left;
+	}
+	.right{
+		right: 15px;
+		text-align: right;
+	}
+}
+
+.todo-view.ng-enter #body,
+.todo-view.ng-leave #body{
+	width: 100%;
+	position: absolute;
+}
+
+.todo-view.ng-enter #body{
+	-webkit-animation-delay: 2s; /* Chrome, Safari, Opera */
+  animation-delay: 2s;
+
+	animation: slide-view-enter 1s linear;
+	/* Firefox: */
+	-moz-animation: slide-view-enter 1s linear;
+	/* Safari 和 Chrome: */
+	-webkit-animation: slide-view-enter 1s linear;
+	/* Opera: */
+	-o-animation: slide-view-enter 1s linear;
+}
+.todo-view.ng-leave #body{
+	animation: slide-view-leave 0.25s linear;
+	/* Firefox: */
+	-moz-animation: slide-view-leave 0.25s linear;
+	/* Safari 和 Chrome: */
+	-webkit-animation: slide-view-leave 0.25s linear;
+	/* Opera: */
+	-o-animation: slide-view-leave 0.25s linear;
+}

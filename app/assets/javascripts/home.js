@@ -3,7 +3,7 @@
 
 (function(){
 	'use strict'
-	angular.module('todoit', ['ngMaterial', 'templates', 'ngRoute', 'ngResource'])
+	angular.module('todoit', ['ngMaterial', 'templates', 'ngRoute', 'ngResource', 'ngAnimate'])
 
 		.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider){
 			$routeProvider
@@ -20,18 +20,16 @@
 				console.log(csrfToken)
 
 				$httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken;
-			  // $httpProvider.defaults.headers.put['X-CSRF-Token'] = csrfToken;
-			  // $httpProvider.defaults.headers.delete['X-CSRF-Token'] = csrfToken;
 		}])
 
-		.controller('TodoListController', ['$scope', '$routeParams', 'Todo', function($scope, $routeParams, Todo){
+		.controller('TodoListController', ['$scope', '$routeParams', 'Todo', '$location', function($scope, $routeParams, Todo, $location){
 			if ($routeParams.date) {
 				if (moment($routeParams.date, 'YYYY-MM-DD').isValid()) {
 					$scope.current_date = moment($routeParams.date, 'YYYY-MM-DD');
 				}else{
 					switch($routeParams.date){
 						case 'today': {
-							$scope.current_date = moment()
+							$scope.current_date = moment();
 							break;
 						}
 					}
@@ -41,14 +39,25 @@
 				$scope.current_date = moment();
 			}
 			console.log($scope.current_date.format('YYYY-MM-DD'));
+			if ($scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')) {
+				$scope.app_title = 'TodoIt Today';
+			}else{
+				$scope.app_title = 'TodoIt ' + $scope.current_date.format('YYYY-MM-DD');
+			}
 
-			$scope.app_title = 'TodoIt Today';
+
 			$scope.new_todo = {};
-
-			Todo.all().success(function(data){
-				console.log(data);
-				$scope.todo_list = data;
-			})
+			if ($scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')){
+				Todo.all().success(function(data){
+					console.log(data);
+					$scope.todo_list = data;
+				});
+			}else{
+				Todo.all($scope.current_date.format('YYYY-MM-DD')).success(function(data){
+					console.log(data);
+					$scope.todo_list = data;
+				});
+			}
 
 
 			$scope.addTodo = function(todo){
@@ -59,7 +68,7 @@
 			};
 
 			$scope.removeTodo = function(todo){
-				var current_todo =  $scope.todo_list[$scope.todo_list.indexOf(todo)];
+				var current_todo = $scope.todo_list[$scope.todo_list.indexOf(todo)];
 				if (current_todo) {
 					Todo.remove(todo).success(function(data){
 						$scope.todo_list.splice($scope.todo_list.indexOf(todo), 1);
@@ -70,13 +79,14 @@
 			}
 
 			$scope.markComplete = function(todo){
+				var current_todo =  $scope.todo_list[$scope.todo_list.indexOf(todo)];
 				if (current_todo) {
 					Todo.markComplete(todo).success(function(data){
 						$scope.todo_list[$scope.todo_list.indexOf(todo)] = data;
 					}).catch(function(error){
 						todo.is_completed = false;
 						$scope.todo_list[$scope.todo_list.indexOf(todo)] = todo;
-					});				
+					});
 				}
 			}
 
@@ -89,20 +99,44 @@
 						todo.is_completed = true;
 						current_todo = todo;
 						console.log(error);
-					});				
+					});
 				}
 			};
+
+			$scope.gotoPrev = function(){
+				var date_str = $scope.current_date.add('-1', 'day').format('YYYY-MM-DD');
+				$location.path('/' + date_str);
+			}
+			$scope.gotoNext = function(){
+				var date_str = $scope.current_date.add('1', 'day').format('YYYY-MM-DD');
+				$location.path('/' + date_str);
+			}
 
 
 		}])
 
+    .directive('todo', function(){
+      return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: 'todo_item.html',
+        scope:{
+          todo: '=',
+          removeTodo: '=',
+          markComplete: '='
+        },
+        link: function(scope, element, attrs){
+          
+        }
+      };
+    })
 		.directive('newTodo',  function(){
 			return {
 				restrict: 'E',
 				replace: true,
 				templateUrl: 'new_todo_form.html',
 				link: function(scope, element, attrs){
-					
+
 				}
 			};
 		})
@@ -118,7 +152,7 @@
 						}
 					};
 				}
-				
+
 				return new_collection;
 			};
 
@@ -126,8 +160,12 @@
 
 		.factory('Todo', [ '$http', function TodoFactory($http){
 			return {
-				all: function(){
-					return $http({ method: 'GET', url: '/todos.json'});
+				all: function(date){
+					if (date) {
+						return $http({ method: 'GET', url: '/todos.json?date=' + date });
+					}else{
+						return $http({ method: 'GET', url: '/todos.json'});
+					}
 				},
 				create: function(todo){
 					return $http({ method: 'POST', url: '/todos.json', data: todo });
@@ -143,15 +181,5 @@
 				}
 			}
 		}]);
-
-
-
-
-	// var todo_list = [
-	// 	{ id: 1, title: 'todo it angualr controller开发', is_completed: false },
-	// 	{ id: 2, title: 'todo it 界面设计', is_completed: true },
-	// 	{ id: 3, title: 'todo it view 开发', is_completed: false }
-	// ];
-
 
 }());

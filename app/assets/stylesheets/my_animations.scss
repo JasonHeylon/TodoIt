@@ -137,3 +137,57 @@
 		}
 	}
 // rotate-todo end
+
+
+// slide-view-enter start
+	@keyframes slide-view-enter
+	{
+		from {top: -800px; opacity: 0;}
+		to {top:0px; opacity: 1; }
+	}
+
+	@-moz-keyframes slide-view-enter /* Firefox */
+	{
+		from {top: -800px; opacity: 0;}
+		to {top:0px; opacity: 1; }
+	}
+
+	@-webkit-keyframes slide-view-enter /* Safari 和 Chrome */
+	{
+		from {top: -800px; opacity: 0;}
+		to {top:0px; opacity: 1; }	}
+
+	@-o-keyframes slide-view-enter /* Opera */
+	{
+		from {top: -800px; opacity: 0;}
+		to {top:0px; opacity: 1; }
+	}
+// slide-view-enter end
+
+// slide-view-leave start
+	@keyframes slide-view-leave
+	{
+		from {opacity: 1;}
+		to {opacity: 0; }
+	}
+
+	@-moz-keyframes slide-view-leave /* Firefox */
+	{
+		from {opacity: 1;}
+		to {opacity: 0; }
+	}
+
+	@-webkit-keyframes slide-view-leave /* Safari 和 Chrome */
+	{
+		from {opacity: 1;}
+		to {opacity: 0; }
+	}
+
+	@-o-keyframes slide-view-leave /* Opera */
+	{
+		from {opacity: 1;}
+		to {opacity: 0; }
+	}
+// slide-view-leave end
+
+
