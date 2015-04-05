@@ -9,32 +9,28 @@
 	</header>
 
 	<div id="body">
-		<form ng-submit="addTodo(new_todo)" class="input-box">
-			<input type="text" placeholder="输入要做的事..." ng-model="new_todo.title" />
+		<form ng-submit="addTodo(new_todo)" class="input-box" ng-show="isCurrentToday()">
+			<input type="text" placeholder="输入今天要做的todo..." ng-model="new_todo.title" />
 		</form>
+		<h2 class="block-title" ng-show="isCurrentToday()">
+			{{ days_word }}还有 {{ todo_list.length - getCompletedCount() }} 个todo
+		</h2>
 
-		<section class="todo-list">
-			<div class="no-list" ng-hide="todo_list.length !== 0">
-				暂无信息
-			</div>
-
+		<section class="todo-list" ng-show="isCurrentToday()">
       <todo ng-repeat="todo in todo_list | todoFilter: false | orderBy: '-created_at'"
-        removeTodo="removeTodo" markComplete="markComplete" todo="todo" ></todo>
+        remove-todo="removeTodo" toggle-complete="markComplete" todo="todo" ></todo>
 
-			<todo-list todos="todoListCtrl.todo_list" />
+			<!-- <todo-list todos="todoListCtrl.todo_list" /> -->
 
 		</section>
 
-		<h2>
-			已完成
+		<h2 class="block-title success">
+			{{ days_word }}完成了 {{ getCompletedCount() }} 个todo
 		</h2>
 
 		<section class="complete-list">
-			<div class="no-list" ng-hide="todo_list.length !== 0">
-				暂无信息
-			</div>
       <todo ng-repeat="todo in todo_list | todoFilter: true | orderBy: '-completed_at'"
-        removeTodo="removeTodo" markComplete="markComplete" todo="todo" ></todo>
+        remove-todo="removeTodo" toggle-complete="markUnComplete" todo="todo" ></todo>
 
 		</section>
 	</div>

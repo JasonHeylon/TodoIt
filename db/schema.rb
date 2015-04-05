@@ -11,20 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317070621) do
+ActiveRecord::Schema.define(version: 20150331151308) do
 
-  create_table "todo_items", force: :cascade do |t|
-    t.text     "title"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.datetime "completed_at"
+  create_table "cookie_users", force: :cascade do |t|
+    t.string   "cookie_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
+  add_index "cookie_users", ["cookie_id"], name: "index_cookie_users_on_cookie_id"
+
   create_table "todos", force: :cascade do |t|
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "title"
     t.datetime "completed_at"
+    t.integer  "cookie_user_id"
   end
 
 end

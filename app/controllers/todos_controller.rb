@@ -1,10 +1,16 @@
 class TodosController < ApplicationController
   before_action :set_todo, only: [:show, :edit, :update, :destroy, :mark_complete, :mark_uncomplete]
+  before_action :check_user, only: [:update, :destroy, :mark_complete, :mark_uncomplete]
 
   # GET /todos
   # GET /todos.json
   def index
-    @todos = Todo.all
+    # @todos = Todo.all
+    if params[:date]
+      @todos = @cookie_user.todos.where("(DATE(created_at) <= ? AND completed_at IS NULL) OR DATE(completed_at) = ?", params[:date], params[:date])
+    else
+      @todos = @cookie_user.todos.where("(DATE(created_at) <= ? AND completed_at IS NULL) OR DATE(completed_at) = ?", Date.tomorrow.strftime("%Y-%m-%d"), DateTime.now.strftime("%Y-%m-%d"))
+    end
   end
 
   # GET /todos/1
@@ -24,7 +30,7 @@ class TodosController < ApplicationController
   # POST /todos
   # POST /todos.json
   def create
-    @todo = Todo.new(todo_params)
+    @todo = @cookie_user.todos.new(todo_params)
 
     respond_to do |format|
       if @todo.save
@@ -96,5 +102,9 @@ class TodosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def todo_params
       params.require(:todo).permit([:title, :completed_at])
+    end
+
+    def check_user
+      @cookie_user.cookie_id == @todo.cookie_user.cookie_id
     end
 end

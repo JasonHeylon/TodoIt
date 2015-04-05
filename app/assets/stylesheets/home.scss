@@ -81,7 +81,6 @@ header{
 		.title{
 			display: inline-block;
 		}
-
 		.todo-btn{
 			outline: none;
 			position: absolute;
@@ -91,19 +90,27 @@ header{
 			margin: auto 0;
 			height: 36px;
 		}
-	
+
+		.status{
+			position: absolute;
+			top:0;
+			right: 10px;
+			height: 20px;
+			bottom: 0;
+			margin: auto 0;
+		}
 		.delete-panel{
 			position: absolute;
 			height: 100%;
 			line-height: 100%;
-			width: 100%;
+			line-height: 100%;
 			background-color: rgba(244,67,54,0.7);
 			color: #fff;
 			right: 0;
 			top :0;
 			width: 1px;
 
-			transition: width  0.2s ease-in-out;
+			transition: width 0.2s ease-in-out;
 			-moz-transition: width 0.2s ease-in-out;	/* Firefox 4 */
 			-webkit-transition: width 0.2s ease-in-out;	/* Safari 和 Chrome */
 			-o-transition: width 0.2s ease-in-out;	/* Opera */
@@ -161,32 +168,7 @@ header{
 
 	}
 
-	.todo.deleting{
-		.delete-panel{
-			animation: deleting-item 5s linear alternate;
-			/* Firefox: */
-			-moz-animation: deleting-item 5s linear alternate;
-			/* Safari 和 Chrome: */
-			-webkit-animation: deleting-item 5s linear alternate;
-			/* Opera: */
-			-o-animation: deleting-item 5s linear alternate;
-			width: 95%;
-			&:hover{ width: 95%; }
-		}
-	}
-	.todo.deleted{
-		animation: deleted-item 2s linear;
-		/* Firefox: */
-		-moz-animation: deleted-item 2s linear;
-		/* Safari 和 Chrome: */
-		-webkit-animation: deleted-item 2s linear;
-		/* Opera: */
-		-o-animation: deleted-item 2s linear;
-		
-		.delete-panel{
-			width: 100%;
-		}
-	}
+
 
 }
 
@@ -200,7 +182,6 @@ header{
 }
 
 
-
 .todo.ng-enter,
 .todo.ng-leave {
 	transition: color 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out;
@@ -208,33 +189,24 @@ header{
 	-webkit-transition: color 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out;	/* Safari 和 Chrome */
 	-o-transition: color 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out;	/* Opera */
 }
-.todo.ng-enter{
-	position: absolute;
-	margin: 50px 0px 0px 0px;
-	opacity: 0;
-}
-.todo-list .todo.ng-enter-active{
-	position: relative;
-	opacity: 1;
-	margin: auto;
-}
 
-.todo-list .todo.ng-leave.ng-leave-active{
+
+.todo-list .todo.completing.ng-leave-active{
 	position: absolute;
 	width:100%;
-	margin: 50px 0px 0px 0px;
+	margin: 500px 0px 0px 0px;
 	z-index: 1000;
 	opacity: 0;
 	color: #e1e1e1;
 	transform-origin: right bottom;
 
-	animation: rotate-todo 1s linear;
+	// animation: rotate-todo 1s linear;
 	/* Firefox: */
-	-moz-animation: rotate-todo 1s linear;
+	// -moz-animation: rotate-todo 1s linear;
 	/* Safari 和 Chrome: */
-	-webkit-animation: rotate-todo 1s linear;
+	// -webkit-animation: rotate-todo 1s linear;
 	/* Opera: */
-	-o-animation: rotate-todo 1s linear;
+	// -o-animation: rotate-todo 1s linear;
 		
 	.complete-panel{
 		width: 100%;
@@ -243,6 +215,57 @@ header{
 		text-decoration: line-through;
 	}
 }
+
+.complete-list .todo.completing.ng-leave-active{
+	position: absolute;
+	width:100%;
+	margin: -50px 0px 0px 0px;
+	z-index: 1000;
+	opacity: 0;
+	color: #e1e1e1;
+	transform-origin: right bottom;
+
+	// animation: un-rotate-todo 1s linear;
+	// -moz-animation: un-rotate-todo 1s linear;
+	// -webkit-animation: un-rotate-todo 1s linear;
+	// -o-animation: un-rotate-todo 1s linear;
+		
+	.complete-panel{
+		width: 100%;
+	}
+	.title{
+		text-decoration: line-through;
+	}
+}
+
+
+
+.todo.deleting.ng-leave:hover,
+.todo.deleting.ng-leave,
+.todo.deleting.ng-leave-active{
+	width: 100%;
+	.delete-panel{
+		width: 100%;
+		transition: width  1s ease-in-out;
+		-moz-transition: width 1s ease-in-out;	/* Firefox 4 */
+		-webkit-transition: width 1s ease-in-out;	/* Safari 和 Chrome */
+		-o-transition: width 1s ease-in-out;	/* Opera */
+
+	}
+}
+
+
+.complete-list .todo.ng-enter{
+	margin: 50px 0px 0px 0px;
+	position: absolute;
+}
+.complete-list .todo.ng-enter-active{
+	position: relative;
+	margin: 0px;
+}
+
+
+
 
 
 .date-navigation{
@@ -295,4 +318,13 @@ header{
 	-webkit-animation: slide-view-leave 0.25s linear;
 	/* Opera: */
 	-o-animation: slide-view-leave 0.25s linear;
+}
+.block-title{
+	border-left: 3px solid #317eac;
+	border-bottom: 1px solid #317eac;
+	padding-left: 10px;
+}
+.block-title.success{
+	border-left: 3px solid #699934;
+	border-bottom: 1px solid #699934;
 }

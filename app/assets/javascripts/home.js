@@ -41,8 +41,10 @@
 			console.log($scope.current_date.format('YYYY-MM-DD'));
 			if ($scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')) {
 				$scope.app_title = 'TodoIt Today';
+				$scope.days_word = "今天";
 			}else{
 				$scope.app_title = 'TodoIt ' + $scope.current_date.format('YYYY-MM-DD');
+				$scope.days_word = "那天";
 			}
 
 
@@ -59,6 +61,9 @@
 				});
 			}
 
+			$scope.isCurrentToday = function(){
+				return $scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD');
+			}
 
 			$scope.addTodo = function(todo){
 				Todo.create(todo).success(function(data){
@@ -79,14 +84,16 @@
 			}
 
 			$scope.markComplete = function(todo){
-				var current_todo =  $scope.todo_list[$scope.todo_list.indexOf(todo)];
+				var current_todo = $scope.todo_list[$scope.todo_list.indexOf(todo)];
 				if (current_todo) {
 					Todo.markComplete(todo).success(function(data){
-						$scope.todo_list[$scope.todo_list.indexOf(todo)] = data;
+						// current_todo = data;
+						current_todo.completed_at = data.completed_at;
+						current_todo.updated_at = data.udpated_at;
 					}).catch(function(error){
-						todo.is_completed = false;
-						$scope.todo_list[$scope.todo_list.indexOf(todo)] = todo;
+						current_todo.is_completed = false;
 					});
+
 				}
 			}
 
@@ -112,6 +119,17 @@
 				$location.path('/' + date_str);
 			}
 
+			$scope.getCompletedCount = function(){
+				if ($scope.todo_list) {
+					var completed_list = $scope.todo_list.filter(function(todo){
+						return todo.is_completed == true;
+					});
+					return completed_list.length;
+				}
+				return 0;
+
+			}
+
 
 		}])
 
@@ -123,10 +141,33 @@
         scope:{
           todo: '=',
           removeTodo: '=',
-          markComplete: '='
+          toggleComplete: '=toggleComplete'
         },
         link: function(scope, element, attrs){
-          
+        	scope.getStatusText = function(){
+        		if (scope.todo.is_completed) {
+        			var days = moment(scope.todo.completed_at).diff(moment(scope.todo.created_at), 'days');
+        			if (days < 1) {
+        				return '';
+        			}
+        			return "延期了" + days + "天";
+        		}else{
+        			var days = moment().diff(moment(scope.todo.created_at), 'days');
+	        		if (days < 1) {
+	        			return "";
+	        		}else{
+	        			var days = moment().diff(moment(scope.todo.created_at), 'days');
+	        			return "已延期" + days + "天";
+	        		}
+        		}
+        	};
+
+          element.find('.delete-panel').on('click', function(e){
+          	element.addClass('deleting');
+          });
+          element.find('.todo-check').on('click', function(e){
+          	element.addClass('completing');
+          })
         }
       };
     })
@@ -134,6 +175,7 @@
 			return {
 				restrict: 'E',
 				replace: true,
+        transclude: true,
 				templateUrl: 'new_todo_form.html',
 				link: function(scope, element, attrs){
 
@@ -143,17 +185,12 @@
 
 		.filter('todoFilter', function(){
 			return function(collection, is_completed){
-				var new_collection = [];
-				if (collection) {
-					for (var i = collection.length - 1; i >= 0; i--) {
-						var current_todo = collection[i];
-						if (current_todo.is_completed == is_completed) {
-							new_collection.push(current_todo);
-						}
-					};
+				if (collection && collection.length > 0) {
+					return collection.filter(function(todo){
+						return todo.is_completed == is_completed;
+					});
 				}
-
-				return new_collection;
+				return [];
 			};
 
 		})
