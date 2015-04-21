@@ -26,13 +26,13 @@ working_directory "/var/www/todoit/current" # available in 0.94.0+
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
 listen "/tmp/todoit.sock", :backlog => 64
-listen 8080, :tcp_nopush => true
+listen 9090, :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 30
 
 # feel free to point this anywhere accessible on the filesystem
-pid "/var/www/shared/pids/weslides_unicorn.pid"
+pid "/var/www/shared/pids/todoit_unicorn.pid"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
