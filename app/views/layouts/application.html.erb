@@ -2,22 +2,35 @@
 <html>
 <head>
   <title>Todoit</title>
+  <%= stylesheet_link_tag    'bootstrap.min', media: 'all' %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application'%>
+
+  <%= javascript_include_tag 'bootstrap.min'%>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-	<header>
-		<%= render 'shared/header' %>
-	</header>
-	<div id="body" class="container">
-		<%= yield %>
-	</div>
-	
-	<footer class="container">
+	<div class="warpper">
+		<header>
+			<%= render 'shared/header' %>
+		</header>
+		<div id="body" class="container">
+			<%- flash.each do |name, msg| %>
+				<div class="alert alert-<%= name %> alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert">
+						<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+					<%= msg %>
+				</div>
+			<%- end %>
+			<%= yield %>
+		</div>
 		
-	</footer>
+		<footer class="container">
+			Created by <a href="http://www.jasonheylon.com" target="_blank">Jason Heylon</a>
+		</footer>
+	</div>
+
 
 </body>
 </html>

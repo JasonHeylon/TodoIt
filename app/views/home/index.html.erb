@@ -8,12 +8,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="todoit">
-	
-	<div ng-view class="todo-view"></div>
-	
-	<footer>
+	<div class="warpper">
+		<div ng-view class="todo-view"></div>
 		
-	</footer>
+		<footer>
+			Created by <a href="http://www.jasonheylon.com" target="_blank">Jason Heylon</a>
+		</footer>
+
+	</div>
 
 </body>
 </html>

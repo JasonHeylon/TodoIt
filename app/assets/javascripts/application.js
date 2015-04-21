@@ -11,7 +11,10 @@
 // about supported directives.
 //
 
+
 //= require jquery
+//= require jquery_ujs
+
 //= require angular
 //= require angular-animate
 //= require angular-aria
@@ -20,6 +23,7 @@
 //= require angular-resource
 //= require moment-with-locales
 
+//= require hotkeys
 //= require angular-rails-templates
 //= require_tree ../templates
 

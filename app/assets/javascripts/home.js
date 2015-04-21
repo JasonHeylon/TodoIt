@@ -3,7 +3,10 @@
 
 (function(){
 	'use strict'
-	angular.module('todoit', ['ngMaterial', 'templates', 'ngRoute', 'ngResource', 'ngAnimate'])
+
+	var checkedMerge = false;
+
+	angular.module('todoit', ['ngMaterial', 'templates', 'ngRoute', 'ngResource', 'ngAnimate', 'cfp.hotkeys'])
 
 		.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider){
 			$routeProvider
@@ -22,7 +25,15 @@
 				$httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken;
 		}])
 
-		.controller('TodoListController', ['$scope', '$routeParams', 'Todo', '$location', function($scope, $routeParams, Todo, $location){
+		.controller('TodoListController', ['$scope', '$routeParams', 'Todo', 'User', '$location', 'hotkeys', function($scope, $routeParams, Todo, User, $location, hotkeys){
+			$scope.alerts = [ ];
+
+			$scope.closeAlert = function(index){
+				$scope.alerts.splice(index, 1);
+			};
+
+			$scope.needMerge = false;
+
 			if ($routeParams.date) {
 				if (moment($routeParams.date, 'YYYY-MM-DD').isValid()) {
 					$scope.current_date = moment($routeParams.date, 'YYYY-MM-DD');
@@ -40,26 +51,32 @@
 			}
 			console.log($scope.current_date.format('YYYY-MM-DD'));
 			if ($scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')) {
-				$scope.app_title = 'TodoIt Today';
+				$scope.app_title = 'Todoit Today';
 				$scope.days_word = "今天";
 			}else{
-				$scope.app_title = 'TodoIt ' + $scope.current_date.format('YYYY-MM-DD');
+				$scope.app_title = 'Todoit ' + $scope.current_date.format('YYYY-MM-DD');
 				$scope.days_word = "那天";
 			}
 
+			$scope.user = null;
+
+			User.currentUser().success(function(data){
+				console.log(data);
+				if (data) {
+					$scope.user = data;
+				}else{
+					$scope.user = null;
+				}
+			});
+
 
 			$scope.new_todo = {};
-			if ($scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')){
-				Todo.all().success(function(data){
-					console.log(data);
-					$scope.todo_list = data;
-				});
-			}else{
-				Todo.all($scope.current_date.format('YYYY-MM-DD')).success(function(data){
-					console.log(data);
-					$scope.todo_list = data;
-				});
-			}
+
+			Todo.all($scope.current_date.format('YYYY-MM-DD')).success(function(data){
+				console.log(data);
+				$scope.todo_list = data;
+			});
+
 
 			$scope.isCurrentToday = function(){
 				return $scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD');
@@ -130,6 +147,54 @@
 
 			}
 
+			if (hotkeys.get('right')) {
+
+			}else{
+				hotkeys.add({
+					combo: 'right',
+					description: 'Go to next day',
+					callback: function(){
+						var date_str = $scope.current_date.add('1', 'day').format('YYYY-MM-DD');
+						$location.path('/' + date_str);
+					}
+				});
+				hotkeys.add({
+					combo: 'left',
+					description: 'Go to next day',
+					callback: function(){
+						var date_str = $scope.current_date.add('-1', 'day').format('YYYY-MM-DD');
+						$location.path('/' + date_str);
+					}
+				});
+			}
+
+			if (!checkedMerge) {
+				User.checkNeedsMerge().success(function(data){
+					console.log(data);
+					if (data) {
+						$scope.needMerge = true;
+					}else{
+						$scope.needMerge = false;
+					}
+				});
+				checkedMerge = true;
+			}
+
+
+			$scope.mergeData = function(){
+				User.mergeLocalData().success(function(data){
+					Todo.all($scope.current_date.format('YYYY-MM-DD')).success(function(data){
+						console.log(data);
+						$scope.todo_list = data;
+						$scope.needMerge = false;
+						$scope.alerts.push({ message: "数据合并完成。" });
+					});
+				});
+			}
+			$scope.closeMergeAlert = function(){
+				// alert('close!');
+				$scope.needMerge = false;
+			}
 
 		}])
 
@@ -182,6 +247,36 @@
 				}
 			};
 		})
+		.directive('mergeAlert', function(){
+			return {
+				restrict: 'E',
+				replace: true,
+				transclude: true,
+				templateUrl: 'merge_alert.html',
+				scope:{
+					onClose: '&',
+					onMerge: '&'
+				},
+				link: function(scope, element, attrs){
+
+				}
+			};
+		})
+		.directive('alert', function(){
+			return {
+				restrict: 'E',
+				replace: true,
+				transclude: true,
+				templateUrl: 'alert.html',
+				scope:{
+					close: '&',
+					message: '='
+				},
+				link: function(scope, element, attrs){
+
+				}
+			};
+		})
 
 		.filter('todoFilter', function(){
 			return function(collection, is_completed){
@@ -216,7 +311,20 @@
 				remove: function(todo){
 					return $http({ method: 'DELETE', url:'/todos/' + todo.id + ".json", data: todo });
 				}
-			}
+			};
+		}])
+		.factory('User', ['$http', function UserFactory($http){
+			return {
+				currentUser: function(){
+					return $http({ method: 'GET', url: '/members/current.json' });
+				},
+				checkNeedsMerge: function(){
+					return $http({ method: 'GET', url: '/members/check_needs_merge.json' });
+				},
+				mergeLocalData: function(){
+					return $http({ method: 'POST', url: '/members/merge_data.json' });
+				}
+			};
 		}]);
 
 }());

@@ -1,19 +1,29 @@
 	<header>
 		<div class="title">
-		  {{ app_title }}
+		  <a href="#/" class="home-title-link">{{ app_title }}</a>
 		</div>
 
 		<div class="user-info">
-		  未登录
+			<div class="cookie-user" ng-hide="user">
+				<a href="/users/sign_in">登录</a> | <a href="/users/sign_up">注册</a>
+			</div>
+			<div class="user" ng-show="user">
+				{{ user.user_name }} |  
+				<a href="/users/sign_out" rel="nofollow" data-method="delete">登出</a>
+			</div>
 		</div>
 	</header>
 
 	<div id="body">
+		<alert ng-repeat="alert in alerts" close="closeAlert($index)" message="alert.message" ng-animate></alert>
+
+		<merge-alert on-close="closeMergeAlert()" on-merge="mergeData()" ng-show="needMerge" ng-animate></merge-alert>
+
 		<form ng-submit="addTodo(new_todo)" class="input-box" ng-show="isCurrentToday()">
-			<input type="text" placeholder="输入今天要做的todo..." ng-model="new_todo.title" />
+			<input type="text" autofocus="autofocus" placeholder="输入今天要做的todo..." ng-model="new_todo.title" />
 		</form>
-		<h2 class="block-title" ng-show="isCurrentToday()">
-			{{ days_word }}还有 {{ todo_list.length - getCompletedCount() }} 个todo
+		<h2 class="block-title" ng-show="isCurrentToday()" style="color:#31b0d5;">
+			<i class="fa fa-plug" ></i> {{ todo_list.length - getCompletedCount() }} todos
 		</h2>
 
 		<section class="todo-list" ng-show="isCurrentToday()">
@@ -24,8 +34,8 @@
 
 		</section>
 
-		<h2 class="block-title success">
-			{{ days_word }}完成了 {{ getCompletedCount() }} 个todo
+		<h2 class="block-title success success-color">
+			<i class="fa fa-check-square-o"></i> {{ getCompletedCount() }} todos done
 		</h2>
 
 		<section class="complete-list">

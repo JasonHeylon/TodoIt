@@ -13,7 +13,6 @@ gem 'font-awesome-rails', '~> 4.2.0.0'
 
 gem 'angular-rails-templates'
 
-gem 'devise'
 gem 'settingslogic', '~> 2.0.9'
 
 # gem 'turbolinks'
@@ -22,9 +21,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'unicorn'
 
+gem 'devise'
 
 group :development do
   gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  
   gem 'quiet_assets'
   # gem 'rack-mini-profiler'
   gem 'pry'
@@ -52,6 +55,9 @@ group :development, :test do
   gem 'spring-commands-rspec', '~> 1.0.2'
 end
 
+group :production do
+  gem 'mysql2'
+end
 
 # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-rails', '~> 4.1.0'

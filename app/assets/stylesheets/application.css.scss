@@ -1,3 +1,4 @@
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -16,20 +17,104 @@
  *= require_self
  *= require angular-material
  *= require font-awesome
+ *= require hotkeys
  */
 
+body,
+html{
+		background-image: asset-url("bg-texture.jpg") !important;
+}
 
 body{
 	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	color: #4d4d4d;
+	// color: #4d4d4d;
 	background-color: #f5f5f5;
 
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: antialiased;
 	-ms-font-smoothing: antialiased;
 	font-smoothing: antialiased;
+
+
 }
 input{
 	font-family: inherit;
 	vertical-align: baseline;
 }
+.alert-alert {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.success-color{
+	color: #449d44;
+}
+.success-bg{
+	background-color: #449d44;
+}
+
+md-checkbox.md-default-theme.md-checked .md-icon
+{
+	background-color: #449d44 !important;
+}
+
+.alert,
+.btn,
+.form-control{
+	border-radius: 0 !important;
+}
+
+
+
+.home-title-link{
+	text-decoration: none;
+	color: rgba(175, 47, 47, 0.15);
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;	/* Firefox 4 */
+	-webkit-transition: all 0.3s ease-in-out;	/* Safari 和 Chrome */
+	-o-transition: all 0.3s ease-in-out;	/* Opera */
+	&:hover{
+		text-decoration: none;
+		color: #2a6496;
+	}
+}
+
+
+
+
+// devise start
+.devise-box{
+	
+	h2{
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.actions{
+		.btn{ width: 100%; }
+	}
+	.links{
+		margin-top: 10px;
+		text-align: right;
+
+	}
+}
+
+// devise end
+.warpper{
+  min-height: 100%;
+  position: relative;
+}
+#body{
+	padding-bottom: 30px;
+}
+
+footer{
+	text-align: center;
+	line-height: 30px;
+	width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+ }

@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'members/current'
+  get 'members/check_needs_merge'
+  post 'members/merge_data'
+
+  devise_for :users
   get 'home/index'
 
   resources :todos do

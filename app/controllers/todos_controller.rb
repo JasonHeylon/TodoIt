@@ -6,11 +6,19 @@ class TodosController < ApplicationController
   # GET /todos.json
   def index
     # @todos = Todo.all
-    if params[:date]
-      @todos = @cookie_user.todos.where("(DATE(created_at) <= ? AND completed_at IS NULL) OR DATE(completed_at) = ?", params[:date], params[:date])
+    if user_signed_in?
+      @user = current_user
     else
-      @todos = @cookie_user.todos.where("(DATE(created_at) <= ? AND completed_at IS NULL) OR DATE(completed_at) = ?", Date.tomorrow.strftime("%Y-%m-%d"), DateTime.now.strftime("%Y-%m-%d"))
+      @user = @cookie_user
     end
+
+    date_start, date_end = Date.tomorrow.strftime("%Y-%m-%d"), DateTime.now.strftime("%Y-%m-%d")
+    date_start = date_end = params[:date] if params[:date]
+    
+    @todos = @user.todos.where("(DATE(created_at) <= ? AND completed_at IS NULL) OR DATE(completed_at) = ?",
+                               date_start, date_end)
+
+
   end
 
   # GET /todos/1
@@ -30,7 +38,11 @@ class TodosController < ApplicationController
   # POST /todos
   # POST /todos.json
   def create
-    @todo = @cookie_user.todos.new(todo_params)
+    if user_signed_in?
+      @todo = current_user.todos.new(todo_params)
+    else
+      @todo = @cookie_user.todos.new(todo_params)
+    end
 
     respond_to do |format|
       if @todo.save
@@ -105,6 +117,10 @@ class TodosController < ApplicationController
     end
 
     def check_user
-      @cookie_user.cookie_id == @todo.cookie_user.cookie_id
+      if user_signed_in?
+        current_user == @todo.user
+      else
+        @cookie_user.cookie_id == @todo.cookie_user.cookie_id
+      end
     end
 end

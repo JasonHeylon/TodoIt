@@ -5,6 +5,9 @@
 body{
 	position: relative;
 }
+a{
+	text-decoration: none;
+}
 
 header{
 	height: 100px;
@@ -55,6 +58,12 @@ header{
 		outline: none;
 		z-index: 2;
 		background: transparent;
+		&:focus{
+			  // border-color: #66afe9;
+			  // outline: 0;
+			  // -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+			  // box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+		}
 	}
 }
 
@@ -98,6 +107,11 @@ header{
 			height: 20px;
 			bottom: 0;
 			margin: auto 0;
+			color: #424242;
+			transition: color 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+			-moz-transition: color 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;	/* Firefox 4 */
+			-webkit-transition: color 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;	/* Safari 和 Chrome */
+			-o-transition: color 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;	/* Opera */
 		}
 		.delete-panel{
 			position: absolute;
@@ -164,6 +178,11 @@ header{
 				}
 
 			}
+			
+			.status{
+				color: #e1e1e1;
+			}
+
 		}
 
 	}
@@ -319,12 +338,110 @@ header{
 	/* Opera: */
 	-o-animation: slide-view-leave 0.25s linear;
 }
+
+
 .block-title{
-	border-left: 3px solid #317eac;
-	border-bottom: 1px solid #317eac;
-	padding-left: 10px;
+	// border-left: 3px solid #317eac;
+	// border-bottom: 1px solid #317eac;
+	// padding-left: 10px;
+	margin-top: 45px;
 }
 .block-title.success{
-	border-left: 3px solid #699934;
-	border-bottom: 1px solid #699934;
+	// border-left: 3px solid #699934;
+	// border-bottom: 1px solid #699934;
+}
+
+
+
+.todo-alert{
+	position: fixed;
+	top: 10px;
+	width: 100%;
+	max-width: 780px;
+	padding: 10px;
+	color: #8a6d3b;
+  background-color: #fcf8e3;
+  border: 1px solid transparent;
+  border-color: #faebcc;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+
+	transition: all linear 0.5s;
+	-moz-transition: all linear 0.5s;	/* Firefox 4 */
+	-webkit-transition: all linear 0.5s;	/* Safari 和 Chrome */
+	-o-transition: all linear 0.5s;
+
+	opacity: 0.8;
+	z-index: 1000;
+
+  .close-button{
+  	position: relative;
+	  top: -2px;
+	  right: 5px;
+	  color: inherit;
+	  padding: 0;
+	  cursor: pointer;
+	  background: 0 0;
+	  border: 0;
+    text-shadow: 0 1px 0 #fff;
+	  filter: alpha(opacity=20);
+	  opacity: .2;
+	  font-size: 18px;
+	  line-height: 1;
+		float: right;
+
+		
+
+		&:hover,
+		&:focus{
+			  color: #000;
+			  text-decoration: none;
+			  cursor: pointer;
+			  filter: alpha(opacity=50);
+			  opacity: .5;
+		}
+  }
+}
+
+.todo-alert.ng-hide-add, 
+.todo-alert.ng-hide-remove {
+  /* this is required as of 1.3x to properly
+     apply all styling in a show/hide animation */
+  transition: 0s linear all;
+}
+
+.todo-alert.ng-hide-add-active,
+.todo-alert.ng-hide-remove-active {
+  /* the transition is defined in the active class */
+  transition: 0.5s linear all;
+  
+}
+
+
+.todo-alert.ng-hide-add { top: 10px; }
+
+.todo-alert.ng-hide-add.ng-hide-add-active { top: -50px;  }
+
+.todo-alert.ng-hide-remove { top: -50px; }
+
+.todo-alert.ng-hide-remove.ng-hide-remove-active { top: 10px; }
+
+
+
+.todo-alert.ng-enter, 
+.todo-alert.ng-leave {
+  display:block;
+}
+
+.todo-alert.ng-enter {
+  top: -50px;
+}
+.todo-alert.ng-leave {
+	top: 10px;
+}
+
+.todo-alert.ng-enter.ng-enter-active {
+  top: 10px;
+}
+.todo-alert.ng-leave.ng-leave-active {
+  top: -50px;
 }
