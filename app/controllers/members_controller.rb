@@ -12,7 +12,7 @@ class MembersController < ApplicationController
 
   def check_needs_merge
 		@cookie_user = CookieUser.find_by(cookie_id: cookies[:cookie_user])
-		if @cookie_user && @cookie_user.todos.any?
+		if @cookie_user && @cookie_user.todos.any? && user_signed_in?
 			render json: true, status: :ok
 		else
 			render json: nil, status: :ok

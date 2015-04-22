@@ -20,7 +20,6 @@
 				});
 
 				var csrfToken = $('meta[name=csrf-token]').attr('content');
-				console.log(csrfToken)
 
 				$httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken;
 		}])
@@ -49,7 +48,6 @@
 			}	else{
 				$scope.current_date = moment();
 			}
-			console.log($scope.current_date.format('YYYY-MM-DD'));
 			if ($scope.current_date.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')) {
 				$scope.app_title = 'Todoit Today';
 				$scope.days_word = "今天";
@@ -61,7 +59,6 @@
 			$scope.user = null;
 
 			User.currentUser().success(function(data){
-				console.log(data);
 				if (data) {
 					$scope.user = data;
 				}else{
@@ -73,7 +70,6 @@
 			$scope.new_todo = {};
 
 			Todo.all($scope.current_date.format('YYYY-MM-DD')).success(function(data){
-				console.log(data);
 				$scope.todo_list = data;
 			});
 
@@ -95,7 +91,7 @@
 					Todo.remove(todo).success(function(data){
 						$scope.todo_list.splice($scope.todo_list.indexOf(todo), 1);
 					}).catch(function(error){
-						console.log(error);
+
 					});
 				}
 			}
@@ -122,7 +118,6 @@
 					}).catch(function(error){
 						todo.is_completed = true;
 						current_todo = todo;
-						console.log(error);
 					});
 				}
 			};
@@ -170,7 +165,6 @@
 
 			if (!checkedMerge) {
 				User.checkNeedsMerge().success(function(data){
-					console.log(data);
 					if (data) {
 						$scope.needMerge = true;
 					}else{
@@ -184,7 +178,6 @@
 			$scope.mergeData = function(){
 				User.mergeLocalData().success(function(data){
 					Todo.all($scope.current_date.format('YYYY-MM-DD')).success(function(data){
-						console.log(data);
 						$scope.todo_list = data;
 						$scope.needMerge = false;
 						$scope.alerts.push({ message: "数据合并完成。" });
