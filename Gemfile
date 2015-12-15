@@ -1,4 +1,5 @@
-source 'https://rubygems.org'
+# source 'https://rubygems.org'
+source 'https://ruby.taobao.org'
 
 ruby '2.2.0'
 
@@ -25,10 +26,10 @@ gem 'unicorn'
 gem 'devise'
 
 group :development do
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler', '~> 1.1.2'
-  
+  # gem 'capistrano-rails'
+  # gem 'capistrano-rvm'
+  # gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'mina'
   gem 'quiet_assets'
   # gem 'rack-mini-profiler'
   gem 'pry'
